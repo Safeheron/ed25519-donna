@@ -31,10 +31,14 @@ int ed25519_scalarmult(ed25519_public_key res, const ed25519_secret_key sk, cons
 void curve25519_scalarmult(curve25519_key mypublic, const curve25519_key secret, const curve25519_key basepoint);
 void curve25519_scalarmult_basepoint(curve25519_key mypublic, const curve25519_key secret);
 
-#if !defined(__GNUC__) || __GNUC__ > 4
+#ifdef __clang__
+/*code specific to clang compiler*/
 #define CONST const
-#else
+#elif __GNUC__ && __GNUC__ <= 4
+/*code for GNU C compiler */
 #define CONST
+#else
+#define CONST const
 #endif
 
 int ed25519_cosi_combine_publickeys(ed25519_public_key res, CONST ed25519_public_key *pks, size_t n);
