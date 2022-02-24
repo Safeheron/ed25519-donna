@@ -18,7 +18,9 @@
 #include "ed25519.h"
 
 #include "ed25519-hash-custom.h"
-#include "memzero.h"
+
+#include "ed25519-donna-memzero.h"
+#define memzero ed25519_donna_memzero
 
 /*
 	Generates a (extsk[0..31]) and aExt (extsk[32..63])
