@@ -1,6 +1,8 @@
 #ifndef ED25519_H
 #define ED25519_H
 
+#include <stdlib.h>
+
 #if defined(__cplusplus)
 extern "C" {
 #endif
