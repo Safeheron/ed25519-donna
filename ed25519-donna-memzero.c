@@ -8,8 +8,12 @@
 #endif
 
 #ifdef __unix__
+#ifdef SAFEHERON_SGX_SDK
+#define HAVE_MEMSET_S_IN_SGX 1
+#else
 #include <strings.h>
 #include <sys/param.h>
+#endif
 #endif
 
 // C11's bounds-checking interface.
@@ -49,6 +53,8 @@
 void ed25519_donna_memzero(void *const pnt, const size_t len) {
 #ifdef _WIN32
   SecureZeroMemory(pnt, len);
+#elif defined(HAVE_MEMSET_S_IN_SGX)
+  memset_s(pnt, (size_t)len, 0, (size_t)len);
 #elif defined(HAVE_MEMSET_S)
   memset_s(pnt, (rsize_t)len, 0, (rsize_t)len);
 #elif defined(HAVE_EXPLICIT_BZERO)
